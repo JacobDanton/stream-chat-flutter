@@ -1,6 +1,7 @@
 import 'package:stream_chat/src/core/models/action.dart';
 import 'package:stream_chat/src/core/models/attachment.dart';
 import 'package:stream_chat/src/core/models/attachment_file.dart';
+import 'package:stream_chat/src/core/platform_detector/platform_detector.dart';
 import 'package:test/test.dart';
 
 import '../../utils.dart';
@@ -46,7 +47,11 @@ void main() {
     });
 
     test('fileName, mimeType property and extraData manipulation', () {
-      final file = AttachmentFile(size: 3, path: 'myfolder/myfile.txt');
+      final file = AttachmentFile(
+          size: 3,
+          path: CurrentPlatform.isWindows
+              ? r'myfolder\myfile.txt'
+              : 'myfolder/myfile.txt');
       final attachment = Attachment(file: file);
 
       expect(attachment.fileSize, 3);
